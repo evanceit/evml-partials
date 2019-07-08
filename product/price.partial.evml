@@ -2,6 +2,11 @@
 /*
     Product Pricing Example
 
+    A product may have a:
+     - Recommended Retail Price (product.rrp)
+     - List Price if the current price is on special offer (product.listPrice)
+     - Current Price (product.price)
+
     https://www.evance.co/help/themes/evml/objects/product#price
 */
 ?>
