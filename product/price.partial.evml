@@ -1,5 +1,40 @@
+<?ev
+/*
+    Product Pricing Example
+
+    https://www.evance.co/help/themes/evml/objects/product#price
+*/
+?>
 <?ev if (product.price) { ?>
-<ul>
+<ul class="product-pricing">
+
+    <?ev if (product.rrp) { ?>
+    <li class="price-rrp">
+        <span class="price-prefix">RRP</span>
+        <span class="price">{{ product.rrp }}</span>
+    </li>
+    <?ev } ?>
+
+    <?ev if (product.isOffer) { ?>
+    <li class="price-was">
+        <span class="price-prefix">Was</span>
+        <span class="price">{{ product.listPrice }}</span>
+    </li>
+    <?ev } ?>
+
+    <li class="price-current">
+        <?ev if (product.isFromPrice) { ?>
+            <span class="price-prefix">from</span>
+        <?ev } ?>
+
+        <span class="price">{{ product.price }}</span>
+
+        <span class="price-suffix">{{ product.priceSuffix }}</span>
+
+        <?ev if (!product.isBuy) { ?>
+            <span class="price-units">per {{ product.priceUnit }}</span>
+        <?ev } ?>
+    </li>
 
 </ul>
 <?ev } ?>
