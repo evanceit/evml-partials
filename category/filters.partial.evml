@@ -1,0 +1,105 @@
+<?ev
+/*
+    Category Filters
+    May be included within a ~/theme/category template.
+
+    Allows users to narrow results from a large product catalogue by filtering on:
+    - Product Specification
+    - Manufacturer
+    - Price
+    
+    Note: ranges require JavaScript. Single and Multi-select options do not.
+
+    Related to:
+
+    - Filtering products in categories
+      https://www.evance.co/help/themes/templates/category/filtering-products
+*/
+?>
+<?ev if (category.filterable && category.filters().length) { ?>
+<div class="category-filters">
+    <?ev for (filter of category.filters()) { ?>
+    <!-- Filter Group -->
+    <div class="filter-group {{ filter.isActive ? 'active' : 'inactive' }}">
+
+        <!-- Filter Heading -->
+        <div class="filter-heading">
+            <strong>{{ filter.title }}</strong>
+            <?ev if (filter.description) { ?>
+            <br>{{ filter.description }}
+            <?ev } ?>
+        </div>
+
+        <?ev
+            if (filter.isRange) {
+                var option = filter.options[0];
+                var name = filter.type;
+                if (filter.isSpecification) {
+                    name += '[' + filter.id + ']';
+                }
+        ?>
+        <!-- Filter Range -->
+        <div class="filter-range">
+
+            <div class="filter-range-slider">
+                <!-- to be redrawn by JavaScript -->
+            </div>
+
+            <div class="filter-range-fields">
+                <div class="filter-range-field">
+                    <!-- Range minimum field -->
+                    <ev:textfield
+                            type="number"
+                            name="{{ name }}[min]"
+                            value="{{ option.minValue.decimal(0) }}"
+                            min="{{ option.min.decimal(0) }}"
+                            max="{{ option.max.decimal(0) }}"
+                            prefix="{{ option.min.prefix() }}" />
+                </div>
+                <div class="filter-range-field">
+                    <!-- Range maximum field -->
+                    <ev:textfield
+                            type="number"
+                            name="{{ name }}[max]"
+                            value="{{ option.maxValue.decimal(0) }}"
+                            min="{{ option.min.decimal(0) }}"
+                            max="{{ option.max.decimal(0) }}"
+                            prefix="{{ option.max.prefix() }}" />
+                </div>
+            </div>
+        </div>
+        <?ev } else { ?>
+        <!-- Filter Options -->
+        <ul class="filter-options">
+            <?ev for (var option of filter.options) { ?>
+            <li class="filter-option {{ option.isActive ? 'active' : (!option.count ? 'disabled' : '') }}">
+                <a href="{{ option.url }}" rel="nofollow">
+
+                    <!-- Option Swatch -->
+                    <?ev if (filter.isSpecification && filter.isSwatch) { ?>
+                    <span class="filter-option-swatch" style="background-color: {{ option.value.color }}">
+                        <!-- Swatch image sizes should be changed to your largest preference -->
+                        <ev:img src="{{ option.value.image }}" width="48" height="48" />
+                    </span>
+                    <?ev } ?>
+
+                    <!-- Option Label -->
+                    <span class="filter-option-label">
+                        {{ option.value }}
+                    </span>
+
+                    <!-- Option Count -->
+                    <?ev if (option.count > 0) { ?>
+                    <span class="filter-option-count">
+                        {{ option.count }}
+                    </span>
+                    <?ev } ?>
+                </a>
+            </li>
+            <?ev } ?>
+        </ul>
+        <?ev } ?>
+    </div>
+    <?ev } ?>
+</div>
+<?ev } ?>

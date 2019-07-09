@@ -1,13 +1,27 @@
 <?ev
 /*
     Product Pricing Example
+    May be applied to a ~/theme/product template or to any partial where
+    a 'product' variable represents a Product object.
 
-    A product may have a:
-     - Recommended Retail Price (product.rrp)
-     - List Price if the current price is on special offer (product.listPrice)
-     - Current Price (product.price)
+    Displays a number of prices attributed to a Product:
 
-    https://www.evance.co/help/themes/evml/objects/product#price
+     - product.rrp
+       Recommended Retail Price
+
+     - product.listPrice
+       List Price if the current price is on special offer
+
+     - product.price
+       Current Price
+
+    Related to:
+
+    - Product Price
+      https://www.evance.co/help/themes/evml/objects/product#price
+
+    - Listing products within a category
+      https://www.evance.co/help/themes/templates/category/listing-products
 */
 ?>
 <?ev if (product.price) { ?>
