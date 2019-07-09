@@ -1,0 +1,62 @@
+<?ev
+/*
+    Product Partial
+    An example of displaying an individual Product object within a Category.
+    May also be used when displaying related products, or recently viewed products.
+
+    Relates to:
+
+    - Listing products within a category
+      https://www.evance.co/help/themes/templates/category/listing-products
+*/
+?>
+<div class="product">
+    <a href="{{ product.url }}">
+
+        <!-- Primary product image -->
+        <div class="product-image">
+            <?ev /*
+                Primary Image
+                Dimensions should be adjusted to suit the design and aspect ratio
+                of your theme. Note, width and height attributes are not rendered
+                allowing you to gracefully handle responsive images.
+            */ ?>
+            <ev:img src="{{ product.thumbnail }}" width="400" maxheight="300" alt="{{ product.title.escape() }}" />
+        </div>
+
+        <!-- User wish list -->
+        <div class="product-wish">
+            <?ev
+                var wishListUrl = url('~?controller=account&action=products');
+                var paramName = product.inWishlist ? 'delete' : 'add';
+                wishListUrl.param(paramName, product.id);
+            ?>
+            <a href="{{ wishListUrl }}" class="{{ product.inWishList ? 'active' : 'inactive' }}">
+                <i class="icon {{ product.inWishList ? 'heartOn' : 'heartOff' }}"></i>
+            </a>
+        </div>
+
+        <!-- Title and description -->
+        <div class="product-blurb">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description.nl2br() }}</p>
+        </div>
+
+        <!-- Product reviews -->
+        <?ev if (product.hasReviews) { ?>
+        <div class="product-rating">
+            <div class="product-rating-average">
+                <ev:rating value="{{ product.averageRating }}" />
+            </div>
+            <div class="product-rating-total">
+                {{ product.totalReviews }}
+            </div>
+        </div>
+        <?ev } ?>
+
+        <!-- Product pricing -->
+        <?ev if (product.hasPrice) { ?>
+        <ev:include src="product/price.partial" product="product" />
+        <?ev } ?>
+    </a>
+</div>
